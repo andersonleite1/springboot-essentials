@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -38,5 +36,10 @@ public class AnimesService {
 
   public void delete(Long id) {
     animeList.remove(findById(id));
+  }
+
+  public void replace(Anime anime) {
+    delete(anime.getId());
+    animeList.add(anime);
   }
 }
