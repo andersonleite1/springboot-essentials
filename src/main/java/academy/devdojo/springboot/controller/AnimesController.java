@@ -5,6 +5,8 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
 import academy.devdojo.springboot.domain.Anime;
+import academy.devdojo.springboot.requests.AnimePostRequestBody;
+import academy.devdojo.springboot.requests.AnimePutRequestBody;
 import academy.devdojo.springboot.service.AnimesService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -33,12 +35,12 @@ public class AnimesController {
 
     @GetMapping(path = "{id}")
     public ResponseEntity<Anime> findById(@PathVariable Long id) {
-        return new ResponseEntity<>(animesService.findById(id), OK);
+        return new ResponseEntity<>(animesService.findByIdOrThrowBadRequestException(id), OK);
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-        Anime animeSaved = animesService.save(anime);
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+        Anime animeSaved = animesService.save(animePostRequestBody);
         return new ResponseEntity<>(animeSaved, CREATED);
     }
 
@@ -49,8 +51,8 @@ public class AnimesController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Anime anime) {
-        animesService.replace(anime);
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
+        animesService.replace(animePutRequestBody);
         return new ResponseEntity<>(NO_CONTENT);
     }
 
